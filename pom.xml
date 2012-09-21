@@ -1,109 +1,169 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <modelVersion>4.0.0</modelVersion>
-  
-  <groupId>com.sjl</groupId>
-  <artifactId>webapp</artifactId>
-  <version>1.0-SNAPSHOT</version>
-  <name>WebApp</name>
-  <description></description>
-  
-  <repositories>
-    <repository>
-      <id>springsource-repo</id>
-      <name>SpringSource Repository</name>
-      <url>http://repo.springsource.org/release</url>
-    </repository>
-  </repositories>
-  
-  <properties>
-    <jetty.version>8.1.5.v20120716</jetty.version>
-    <jetty.jsp.version>8.1.4.v20120524</jetty.jsp.version>
-    <spring.version>3.1.2.RELEASE</spring.version>
-  </properties>
-
-  <build>
-    <plugins>
-      <plugin>
-      	<groupId>org.apache.maven.plugins</groupId>
-	    <artifactId>maven-source-plugin</artifactId>
-        <version>2.1.2</version>
-        <executions>
-          <execution>
-            <id>attach-sources</id>
-            <phase>verify</phase>
-            <goals>
-              <goal>jar-no-fork</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
-      <plugin>
-	     <artifactId>maven-compiler-plugin</artifactId>
-	     <version>2.3.2</version>
-	     <configuration>
-	       <source>1.6</source>
-	       <target>1.6</target>
-	     </configuration>
-	  </plugin>
-      <plugin> 
-        <artifactId>maven-eclipse-plugin</artifactId> 
-        <configuration> 
-          <downloadSources>true</downloadSources>
-        </configuration> 
-      </plugin> 
-    </plugins>	  
-  </build>
-    
-  <dependencies>
-  
-    <!-- SPRING DEPENDENCIES -->
-    <dependency>
-      <groupId>org.springframework</groupId>
-      <artifactId>spring-context</artifactId>
-      <version>${spring.version}</version>
-    </dependency> 
-    <dependency>
-      <groupId>org.springframework</groupId>
-      <artifactId>spring-webmvc</artifactId>
-      <version>${spring.version}</version>
-    </dependency>
-    
-    <!-- JETTY DEPENDENCIES -->
-    <dependency>
-      <groupId>org.eclipse.jetty</groupId>
-      <artifactId>jetty-server</artifactId>
-      <version>${jetty.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.eclipse.jetty</groupId>
-      <artifactId>jetty-servlet</artifactId>
-      <version>${jetty.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.eclipse.jetty</groupId>
-      <artifactId>jetty-webapp</artifactId>
-      <version>${jetty.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.eclipse.jetty</groupId>
-      <artifactId>jetty-servlets</artifactId>
-      <version>${jetty.version}</version>
-    </dependency>
-
-    <!-- JSP and JSTL SUPPORT -->
-    <dependency>
-	  <groupId>org.eclipse.jetty</groupId>
-	  <artifactId>jetty-jsp</artifactId>
-	  <version>${jetty.jsp.version}</version>
-	</dependency>    
-    <dependency>
-      <groupId>javax.servlet</groupId>
-      <artifactId>jstl</artifactId>
-      <version>1.2</version>
-      <scope>provided</scope>
-    </dependency>
-  </dependencies>
-
-</project>
-
+	<?xml version="1.0" encoding="UTF-8"?>
+	<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	  <modelVersion>4.0.0</modelVersion>
+	  
+	  <groupId>com.sjl</groupId>
+	  <artifactId>webapp</artifactId>
+	  <version>1.0-SNAPSHOT</version>
+	  <name>WebApp</name>
+	  <description></description>
+	  
+	  <repositories>
+	    <repository>
+	      <id>springsource-repo</id>
+	      <name>SpringSource Repository</name>
+	      <url>http://repo.springsource.org/release</url>
+	    </repository>
+	  </repositories>
+	  
+	  <properties>
+	    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	    <jetty.version>8.1.5.v20120716</jetty.version>
+	    <jetty.jsp.version>8.1.4.v20120524</jetty.jsp.version>
+	    <spring.version>3.1.2.RELEASE</spring.version>
+	  </properties>
+	
+	  <build>
+	    <plugins>
+	      <plugin>
+	      	<groupId>org.apache.maven.plugins</groupId>
+		    <artifactId>maven-source-plugin</artifactId>
+	        <version>2.1.2</version>
+	        <executions>
+	          <execution>
+	            <id>attach-sources</id>
+	            <phase>verify</phase>
+	            <goals>
+	              <goal>jar-no-fork</goal>
+	            </goals>
+	          </execution>
+	        </executions>
+	      </plugin>
+	      <plugin>
+		     <artifactId>maven-compiler-plugin</artifactId>
+		     <version>2.3.2</version>
+		     <configuration>
+		       <source>1.6</source>
+		       <target>1.6</target>
+		     </configuration>
+		  </plugin>
+	      <plugin> 
+	        <artifactId>maven-eclipse-plugin</artifactId>
+	        <version>2.9</version>
+	        <configuration> 
+	          <downloadSources>true</downloadSources>
+	        </configuration> 
+	      </plugin>
+	      <plugin>
+	        <groupId>org.codehaus.mojo</groupId>
+	        <artifactId>build-helper-maven-plugin</artifactId>
+	        <version>1.5</version>
+	        <executions>
+	          <execution>
+	            <id>add-resource</id>
+	            <phase>generate-resources</phase>
+	            <goals>
+	              <goal>add-resource</goal>
+	            </goals>
+	            <configuration>
+	              <resources>
+	                <resource>
+	                  <directory>src/main/java/META-INF/webapp</directory>
+	                  <targetPath>META-INF/webapp</targetPath>
+	                </resource>
+	              </resources>
+	            </configuration>
+	          </execution>
+	        </executions>
+	      </plugin>
+	      <plugin>
+	        <groupId>org.apache.maven.plugins</groupId>
+	        <artifactId>maven-shade-plugin</artifactId>
+	        <version>2.0</version>
+	        <executions>
+	          <execution>
+	            <goals>
+	              <goal>shade</goal>
+	            </goals>
+	            <configuration>
+	              <filters>
+	                <filter>
+	                  <artifact>*:*</artifact>
+	                  <excludes>
+	                    <exclude>**/*.DSA</exclude>
+	                    <exclude>**/*.RSA</exclude>
+	                    <exclude>**/*.SF</exclude>
+	                  </excludes>
+	                </filter>
+	              </filters>
+	              <transformers>
+	                <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
+	                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+	                  <mainClass>com.sjl.Main</mainClass>
+	                </transformer>
+	                <transformer implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
+	                  <resource>META-INF/spring.handlers</resource>
+	                </transformer>
+	                <transformer implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
+	                  <resource>META-INF/spring.schemas</resource>
+	                </transformer>
+	              </transformers>
+	            </configuration>
+	          </execution>
+	        </executions>
+	      </plugin> 
+	    </plugins> 
+	  </build>
+	    
+	  <dependencies>
+	  
+	    <!-- SPRING DEPENDENCIES -->
+	    <dependency>
+	      <groupId>org.springframework</groupId>
+	      <artifactId>spring-context</artifactId>
+	      <version>${spring.version}</version>
+	    </dependency> 
+	    <dependency>
+	      <groupId>org.springframework</groupId>
+	      <artifactId>spring-webmvc</artifactId>
+	      <version>${spring.version}</version>
+	    </dependency>
+	    
+	    <!-- JETTY DEPENDENCIES -->
+	    <dependency>
+	      <groupId>org.eclipse.jetty</groupId>
+	      <artifactId>jetty-server</artifactId>
+	      <version>${jetty.version}</version>
+	    </dependency>
+	    <dependency>
+	      <groupId>org.eclipse.jetty</groupId>
+	      <artifactId>jetty-servlet</artifactId>
+	      <version>${jetty.version}</version>
+	    </dependency>
+	    <dependency>
+	      <groupId>org.eclipse.jetty</groupId>
+	      <artifactId>jetty-webapp</artifactId>
+	      <version>${jetty.version}</version>
+	    </dependency>
+	    <dependency>
+	      <groupId>org.eclipse.jetty</groupId>
+	      <artifactId>jetty-servlets</artifactId>
+	      <version>${jetty.version}</version>
+	    </dependency>
+	
+	    <!-- JSP and JSTL SUPPORT -->
+	    <dependency>
+		  <groupId>org.eclipse.jetty</groupId>
+		  <artifactId>jetty-jsp</artifactId>
+		  <version>${jetty.jsp.version}</version>
+		</dependency>    
+	    <dependency>
+	      <groupId>javax.servlet</groupId>
+	      <artifactId>jstl</artifactId>
+	      <version>1.2</version>
+	      <scope>provided</scope>
+	    </dependency>
+	  </dependencies>
+	
+	</project>
+	
