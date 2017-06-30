@@ -1,4 +1,4 @@
-	<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 	<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	  <modelVersion>4.0.0</modelVersion>
 	  
@@ -18,13 +18,28 @@
 	  
 	  <properties>
 	    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-	    <jetty.version>8.1.5.v20120716</jetty.version>
-	    <jetty.jsp.version>8.1.4.v20120524</jetty.jsp.version>
-	    <spring.version>3.1.2.RELEASE</spring.version>
+	    <jetty.version>9.1.4.v20140401</jetty.version>
+	    <jetty.jsp.version>9.1.4.v20140401</jetty.jsp.version>
+	    <spring.version>4.0.4.RELEASE</spring.version>
 	  </properties>
 	
 	  <build>
 	    <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-surefire-plugin</artifactId>
+            <version>2.17</version>
+            <configuration>
+                <!--
+                Needed to make jetty find its JSP TLDs. Without this, you'll get:
+
+                org.apache.jasper.JasperException: /WEB-INF/views/index.jsp(1,68) PWC6188: The absolute uri:
+                http://www.springframework.org/tags cannot be resolved in either web.xml or the jar files deployed with
+                this application.
+                -->
+              <useSystemClassLoader>false</useSystemClassLoader>
+            </configuration>
+          </plugin>
 	      <plugin>
 	      	<groupId>org.apache.maven.plugins</groupId>
 		    <artifactId>maven-source-plugin</artifactId>
@@ -163,7 +178,19 @@
 	      <version>1.2</version>
 	      <scope>provided</scope>
 	    </dependency>
-	  </dependencies>
+        <dependency>
+          <groupId>junit</groupId>
+          <artifactId>junit</artifactId>
+          <version>4.11</version>
+          <scope>test</scope>
+        </dependency>
+          <dependency>
+              <groupId>commons-io</groupId>
+              <artifactId>commons-io</artifactId>
+              <version>2.4</version>
+              <scope>test</scope>
+          </dependency>
+      </dependencies>
 	
 	</project>
 	

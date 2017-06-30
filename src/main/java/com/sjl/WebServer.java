@@ -1,14 +1,21 @@
 package com.sjl;
 
-import java.io.*;
-import java.net.*;
-import java.util.*;
+import java.io.File;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
-import org.eclipse.jetty.server.*;
-import org.eclipse.jetty.server.handler.*;
-import org.eclipse.jetty.server.nio.*;
-import org.eclipse.jetty.util.thread.*;
-import org.eclipse.jetty.webapp.*;
+import org.eclipse.jetty.server.Handler;
+import org.eclipse.jetty.server.NCSARequestLog;
+import org.eclipse.jetty.server.NetworkTrafficServerConnector;
+import org.eclipse.jetty.server.RequestLog;
+import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.server.handler.HandlerCollection;
+import org.eclipse.jetty.server.handler.HandlerList;
+import org.eclipse.jetty.server.handler.RequestLogHandler;
+import org.eclipse.jetty.util.thread.QueuedThreadPool;
+import org.eclipse.jetty.util.thread.ThreadPool;
+import org.eclipse.jetty.webapp.WebAppContext;
 
 /**
  * Example WebServer class which sets up an embedded Jetty appropriately
@@ -24,7 +31,9 @@ public class WebServer
 	private static final String WEB_XML = "META-INF/webapp/WEB-INF/web.xml";
     private static final String CLASS_ONLY_AVAILABLE_IN_IDE = "com.sjl.IDE";
     private static final String PROJECT_RELATIVE_PATH_TO_WEBAPP = "src/main/java/META-INF/webapp";
-    
+
+    private int localPort;
+
     public static interface WebContext
     {
         public File getWarPath();
@@ -42,21 +51,27 @@ public class WebServer
     }
     
     public WebServer(int aPort, String aBindInterface)
-    {        
+    {
         port = aPort;
         bindInterface = aBindInterface;
     }
-    
+
+    public int getLocalPort() {
+        return localPort;
+    }
+
     public void start() throws Exception
     {
-        server = new Server();
+        server = new Server(createThreadPool());
 
-        server.setThreadPool(createThreadPool());
-        server.addConnector(createConnector());
-        server.setHandler(createHandlers());        
+        NetworkTrafficServerConnector connector = createConnector();
+        server.addConnector(connector);
+
+        server.setHandler(createHandlers());
         server.setStopAtShutdown(true);
-                
-        server.start();       
+
+        server.start();
+        localPort = connector.getLocalPort();
     }
     
     public void join() throws InterruptedException
@@ -79,9 +94,9 @@ public class WebServer
         return _threadPool;
     }
     
-    private SelectChannelConnector createConnector()
+    private NetworkTrafficServerConnector createConnector()
     {
-        SelectChannelConnector _connector = new SelectChannelConnector();
+        NetworkTrafficServerConnector _connector = new NetworkTrafficServerConnector(server);
         _connector.setPort(port);
         _connector.setHost(bindInterface);
         return _connector;
